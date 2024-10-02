@@ -1,28 +1,31 @@
+// (using keyword) -> using directive: creates an alias for a namespace or imports types defined in other namespaces
 using System.Data;
 using MySql.Data.MySqlClient;
 
 namespace Quiz_personal
 {
-    public partial class Form1 : Form
+    public partial class QuestionForm : Form
     {
         // MySQL connection string
         string connectionString = "Server=localhost;Port=3306;Database=quiz_db;Uid=root;Pwd=132456;";
 
 
         // Variables to store quiz data
+        private int totalQuestions;
         int questionIndex = 0;
         int score = 0;
         DataTable quizData;
 
-        public Form1()
+        public QuestionForm(int questionCount)
         {
-            InitializeComponent(); // Call the async method to load quiz data
+            InitializeComponent();
+            totalQuestions = questionCount;
         }
 
         // Asynchronous function to load quiz data from the MySQL database
         private async Task LoadQuizDataAsync()
         {
-
+            // (using keyword) -> using statement: defines a scope at the end of which an object is disposed
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 await connection.OpenAsync();
@@ -45,28 +48,34 @@ namespace Quiz_personal
             DisplayNextQuestion();  // Display the first question
         }
 
-        // Function to display the next question
+        /// <summary>
+        /// Displays the next question in the quiz.<br></br> 
+        /// Updates the question label and option buttons with the current question's data.<br></br>
+        /// Clears any previous selections before displaying the new question.
+        /// </summary>
         private void DisplayNextQuestion()
         {
-            if (questionIndex < quizData.Rows.Count)
+            if (questionIndex < totalQuestions && questionIndex < quizData.Rows.Count)
             {
-                DataRow row = quizData.Rows[questionIndex];
-                lblQuestion.Text = row["question_text"].ToString();
-                radioButton1.Text = row["option_1"].ToString();
-                radioButton2.Text = row["option_2"].ToString();
-                radioButton3.Text = row["option_3"].ToString();
-                radioButton4.Text = row["option_4"].ToString();
+                // Load the current question
+                DataRow currentQuestion = quizData.Rows[questionIndex];
+
+                lblQuestion.Text = currentQuestion["question_text"].ToString();
+                radioButton1.Text = currentQuestion["option_1"].ToString();
+                radioButton2.Text = currentQuestion["option_2"].ToString();
+                radioButton3.Text = currentQuestion["option_3"].ToString();
+                radioButton4.Text = currentQuestion["option_4"].ToString();
+
+                // Clear the previous selection
+                radioButton1.Checked = false;
+                radioButton2.Checked = false;
+                radioButton3.Checked = false;
+                radioButton4.Checked = false;
             }
             else
             {
-                MessageBox.Show("Quiz completed! Your score: " + score);
+                ShowScoreForm();
             }
-        }
-
-        // Asynchronous function to check the selected answer
-        private async void btnNext_ClickAsync(object sender, EventArgs e)
-        {
-            await CheckAnswerAsync();  // Call the async method to check the answer
         }
 
         // Asynchronous method to check if the answer is correct
@@ -86,7 +95,7 @@ namespace Quiz_personal
                 if (selectedOption == correctAnswer)
                 {
                     score++;
-                    MessageBox.Show("Correct!");
+                    MessageBox.Show("You nailed it!");
                 }
                 else
                 {
@@ -99,7 +108,25 @@ namespace Quiz_personal
             }
             else
             {
-                MessageBox.Show("Quiz completed! Your score: " + score);
+                ShowScoreForm();
+            }
+        }
+
+        private void ShowScoreForm()
+        {
+            // It opens the ScoreForm and displays the final score
+            ScoreForm scoreForm = new ScoreForm(score, totalQuestions);
+
+            if (scoreForm.ShowDialog() == DialogResult.Retry)
+            {
+                // Restar the game and return to the StartForm
+                this.Close();
+                StartForm startForm = new StartForm();
+                startForm.Show();
+            }
+            else
+            {
+                this.Close();
             }
         }
 
@@ -114,3 +141,4 @@ namespace Quiz_personal
         }
     }
 }
+
