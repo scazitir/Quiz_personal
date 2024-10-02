@@ -16,36 +16,33 @@ namespace Quiz_personal
 
         public Form1()
         {
-            InitializeComponent();
-            _ = LoadQuizDataAsync();  // Call the async method to load quiz data
+            InitializeComponent(); // Call the async method to load quiz data
         }
 
         // Asynchronous function to load quiz data from the MySQL database
         private async Task LoadQuizDataAsync()
         {
+
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                try
-                {
-                    await connection.OpenAsync();  // Open the MySQL connection asynchronously
-                    string query = "SELECT * FROM questions";
-                    MySqlCommand command = new MySqlCommand(query, connection);
+                await connection.OpenAsync();
+                string query = "SELECT * FROM questions";
+                MySqlCommand command = new MySqlCommand(query, connection);
 
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())  // Execute the query asynchronously
-                    {
-                        quizData = new DataTable();
-                        quizData.Load(reader);  // Load the quiz data into the DataTable
-                    }
-                }
-                catch (Exception ex)
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
                 {
-                    MessageBox.Show("Error loading quiz data: " + ex.Message);
-                    return;
+                    quizData = new DataTable();
+                    quizData.Load(reader);
                 }
             }
 
-            // After loading data, display the first question
-            DisplayNextQuestion();
+            // Shuffle the questions
+            var random = new Random();
+            quizData = quizData.AsEnumerable()
+                               .OrderBy(r => random.Next())
+                               .CopyToDataTable();
+
+            DisplayNextQuestion();  // Display the first question
         }
 
         // Function to display the next question
@@ -97,8 +94,8 @@ namespace Quiz_personal
                 }
 
                 questionIndex++;
-                await Task.Delay(200);  // Add a small delay to simulate async task completion
-                DisplayNextQuestion();  // Display the next question
+                await Task.Delay(200);  
+                DisplayNextQuestion();  
             }
             else
             {
@@ -109,6 +106,11 @@ namespace Quiz_personal
         private async void btnNext_Click(object sender, EventArgs e)
         {
             await CheckAnswerAsync();
+        }
+
+        private async void Form1_Load(object sender, EventArgs e)
+        {
+            await LoadQuizDataAsync();
         }
     }
 }

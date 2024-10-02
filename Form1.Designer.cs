@@ -111,6 +111,7 @@
             Controls.Add(lblQuestion);
             Name = "Form1";
             Text = "Ultra Quiz OOP ";
+            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }
