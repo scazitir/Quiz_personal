@@ -107,6 +107,24 @@ namespace Quiz_personal
             }
         }
 
+        private void ShowScoreForm()
+        {
+            // It opens the ScoreForm and displays the final score
+            ScoreForm scoreForm = new ScoreForm(score, totalQuestions);
+
+            if (scoreForm.ShowDialog() == DialogResult.Retry)
+            {
+                // Restar the game and return to the StartForm
+                this.Close();
+                StartForm startForm = new StartForm();
+                startForm.Show();
+            }
+            else
+            {
+                this.Close();
+            }
+        }
+
         private async void btnNext_Click(object sender, EventArgs e)
         {
             await CheckAnswerAsync();
@@ -115,26 +133,6 @@ namespace Quiz_personal
         private async void Form1_Load(object sender, EventArgs e)
         {
             await LoadQuizDataAsync();
-        }
-
-        private void ShowScoreForm()
-        {
-            // Abre o ScoreForm para exibir o score final
-            ScoreForm scoreForm = new ScoreForm(score, totalQuestions);
-
-            // Verifica se o usuário escolheu "Restart"
-            if (scoreForm.ShowDialog() == DialogResult.Retry)
-            {
-                // Reinicia o jogo voltando para o StartForm
-                this.Close();
-                StartForm startForm = new StartForm();
-                startForm.Show();
-            }
-            else
-            {
-                // Fecha o quiz quando o ScoreForm é fechado
-                this.Close();
-            }
         }
     }
 }

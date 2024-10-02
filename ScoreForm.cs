@@ -15,20 +15,18 @@ namespace Quiz_personal
         public ScoreForm(int score, int totalQuestions)
         {
             InitializeComponent();
-            lblScore.Text = $"Você acertou {score} de {totalQuestions} perguntas!";
+            lblScore.Text = $"You got {score} out of {totalQuestions} questions correct";
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();  // Fecha o formulário
+            this.Close(); 
         }
 
-        // Evento do botão Restart
         private void btnRestart_Click(object sender, EventArgs e)
         {
-            // Fecha o formulário de score e retorna ao StartForm
             this.DialogResult = DialogResult.Retry;
-            this.Close();  // Fecha o formulário de score
+            this.Close(); 
         }
     }
 }

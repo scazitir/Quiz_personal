@@ -35,45 +35,58 @@
             // 
             // lblScore
             // 
-            lblScore.AutoSize = true;
-            lblScore.Location = new Point(344, 83);
+            lblScore.Font = new Font("Segoe UI", 40F);
+            lblScore.ForeColor = SystemColors.ControlLight;
+            lblScore.Location = new Point(95, 140);
             lblScore.Name = "lblScore";
-            lblScore.Size = new Size(38, 15);
+            lblScore.Size = new Size(850, 113);
             lblScore.TabIndex = 0;
             lblScore.Text = "label1";
+            lblScore.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // btnRestart
             // 
-            btnRestart.Location = new Point(189, 258);
+            btnRestart.BackColor = Color.FromArgb(234, 53, 70);
+            btnRestart.BackgroundImageLayout = ImageLayout.None;
+            btnRestart.FlatAppearance.BorderSize = 0;
+            btnRestart.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
+            btnRestart.ForeColor = SystemColors.ControlLight;
+            btnRestart.Location = new Point(214, 466);
             btnRestart.Name = "btnRestart";
-            btnRestart.Size = new Size(75, 23);
+            btnRestart.Size = new Size(120, 50);
             btnRestart.TabIndex = 1;
             btnRestart.Text = "Restart";
-            btnRestart.UseVisualStyleBackColor = true;
+            btnRestart.UseVisualStyleBackColor = false;
             btnRestart.Click += btnRestart_Click;
             // 
             // btnClose
             // 
-            btnClose.Location = new Point(480, 258);
+            btnClose.BackColor = Color.FromArgb(234, 53, 70);
+            btnClose.BackgroundImageLayout = ImageLayout.None;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
+            btnClose.ForeColor = SystemColors.ControlLight;
+            btnClose.Location = new Point(671, 466);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(75, 23);
+            btnClose.Size = new Size(120, 50);
             btnClose.TabIndex = 1;
             btnClose.Text = "Exit";
-            btnClose.UseVisualStyleBackColor = true;
+            btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += btnClose_Click;
             // 
             // ScoreForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.FromArgb(102, 46, 155);
+            ClientSize = new Size(1029, 699);
             Controls.Add(btnClose);
             Controls.Add(btnRestart);
             Controls.Add(lblScore);
             Name = "ScoreForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "ScoreForm";
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
