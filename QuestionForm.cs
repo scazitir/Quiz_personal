@@ -1,9 +1,10 @@
+// (using keyword) -> using directive: creates an alias for a namespace or imports types defined in other namespaces
 using System.Data;
 using MySql.Data.MySqlClient;
 
 namespace Quiz_personal
 {
-    public partial class Form1 : Form
+    public partial class QuestionForm : Form
     {
         // MySQL connection string
         string connectionString = "Server=localhost;Port=3306;Database=quiz_db;Uid=root;Pwd=132456;";
@@ -15,7 +16,7 @@ namespace Quiz_personal
         int score = 0;
         DataTable quizData;
 
-        public Form1(int questionCount)
+        public QuestionForm(int questionCount)
         {
             InitializeComponent();
             totalQuestions = questionCount;
@@ -24,7 +25,7 @@ namespace Quiz_personal
         // Asynchronous function to load quiz data from the MySQL database
         private async Task LoadQuizDataAsync()
         {
-
+            // (using keyword) -> using statement: defines a scope at the end of which an object is disposed
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 await connection.OpenAsync();
@@ -47,7 +48,11 @@ namespace Quiz_personal
             DisplayNextQuestion();  // Display the first question
         }
 
-        // Function to display the next question
+        /// <summary>
+        /// Displays the next question in the quiz.<br></br> 
+        /// Updates the question label and option buttons with the current question's data.<br></br>
+        /// Clears any previous selections before displaying the new question.
+        /// </summary>
         private void DisplayNextQuestion()
         {
             if (questionIndex < totalQuestions && questionIndex < quizData.Rows.Count)
@@ -90,7 +95,7 @@ namespace Quiz_personal
                 if (selectedOption == correctAnswer)
                 {
                     score++;
-                    MessageBox.Show("Correct!");
+                    MessageBox.Show("You nailed it!");
                 }
                 else
                 {

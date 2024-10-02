@@ -20,7 +20,7 @@ namespace Quiz_personal
         private void btnFiveQuestions_Click(object sender, EventArgs e)
         {
             // Open the QuizForm with 5 questions
-            Form1 quizForm = new Form1(5);
+            QuestionForm quizForm = new QuestionForm(5);
             quizForm.Show();
             this.Hide();  // Optionally hide the StartForm
         }
@@ -28,7 +28,7 @@ namespace Quiz_personal
         private void btnTenQuestions_Click(object sender, EventArgs e)
         {
             // Open the QuizForm with 10 questions
-            Form1 quizForm = new Form1(10);
+            QuestionForm quizForm = new QuestionForm(10);
             quizForm.Show();
             this.Hide();  // Optionally hide the StartForm
         }
