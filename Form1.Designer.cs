@@ -39,17 +39,21 @@
             // lblQuestion
             // 
             lblQuestion.AutoSize = true;
-            lblQuestion.Location = new Point(381, 78);
+            lblQuestion.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblQuestion.Location = new Point(130, 71);
             lblQuestion.Name = "lblQuestion";
-            lblQuestion.Size = new Size(0, 15);
+            lblQuestion.Size = new Size(0, 41);
             lblQuestion.TabIndex = 0;
             // 
             // radioButton1
             // 
             radioButton1.AutoSize = true;
+            radioButton1.FlatAppearance.BorderColor = Color.Red;
+            radioButton1.FlatAppearance.BorderSize = 2;
+            radioButton1.Font = new Font("Segoe UI", 12F);
             radioButton1.Location = new Point(180, 197);
             radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(94, 19);
+            radioButton1.Size = new Size(119, 25);
             radioButton1.TabIndex = 1;
             radioButton1.TabStop = true;
             radioButton1.Text = "radioButton1";
@@ -58,9 +62,12 @@
             // radioButton2
             // 
             radioButton2.AutoSize = true;
+            radioButton2.FlatAppearance.BorderColor = Color.Red;
+            radioButton2.FlatAppearance.BorderSize = 2;
+            radioButton2.Font = new Font("Segoe UI", 12F);
             radioButton2.Location = new Point(537, 197);
             radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(94, 19);
+            radioButton2.Size = new Size(119, 25);
             radioButton2.TabIndex = 1;
             radioButton2.TabStop = true;
             radioButton2.Text = "radioButton1";
@@ -69,9 +76,12 @@
             // radioButton3
             // 
             radioButton3.AutoSize = true;
+            radioButton3.FlatAppearance.BorderColor = Color.Red;
+            radioButton3.FlatAppearance.BorderSize = 2;
+            radioButton3.Font = new Font("Segoe UI", 12F);
             radioButton3.Location = new Point(180, 288);
             radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(94, 19);
+            radioButton3.Size = new Size(119, 25);
             radioButton3.TabIndex = 1;
             radioButton3.TabStop = true;
             radioButton3.Text = "radioButton1";
@@ -80,9 +90,12 @@
             // radioButton4
             // 
             radioButton4.AutoSize = true;
+            radioButton4.FlatAppearance.BorderColor = Color.Red;
+            radioButton4.FlatAppearance.BorderSize = 2;
+            radioButton4.Font = new Font("Segoe UI", 12F);
             radioButton4.Location = new Point(537, 288);
             radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(94, 19);
+            radioButton4.Size = new Size(119, 25);
             radioButton4.TabIndex = 1;
             radioButton4.TabStop = true;
             radioButton4.Text = "radioButton1";

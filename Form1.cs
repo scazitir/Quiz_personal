@@ -10,13 +10,15 @@ namespace Quiz_personal
 
 
         // Variables to store quiz data
+        private int totalQuestions;
         int questionIndex = 0;
         int score = 0;
         DataTable quizData;
 
-        public Form1()
+        public Form1(int questionCount)
         {
-            InitializeComponent(); // Call the async method to load quiz data
+            InitializeComponent();
+            totalQuestions = questionCount;
         }
 
         // Asynchronous function to load quiz data from the MySQL database
@@ -48,25 +50,27 @@ namespace Quiz_personal
         // Function to display the next question
         private void DisplayNextQuestion()
         {
-            if (questionIndex < quizData.Rows.Count)
+            if (questionIndex < totalQuestions && questionIndex < quizData.Rows.Count)
             {
-                DataRow row = quizData.Rows[questionIndex];
-                lblQuestion.Text = row["question_text"].ToString();
-                radioButton1.Text = row["option_1"].ToString();
-                radioButton2.Text = row["option_2"].ToString();
-                radioButton3.Text = row["option_3"].ToString();
-                radioButton4.Text = row["option_4"].ToString();
+                // Load the current question
+                DataRow currentQuestion = quizData.Rows[questionIndex];
+
+                lblQuestion.Text = currentQuestion["question_text"].ToString();
+                radioButton1.Text = currentQuestion["option_1"].ToString();
+                radioButton2.Text = currentQuestion["option_2"].ToString();
+                radioButton3.Text = currentQuestion["option_3"].ToString();
+                radioButton4.Text = currentQuestion["option_4"].ToString();
+
+                // Clear the previous selection
+                radioButton1.Checked = false;
+                radioButton2.Checked = false;
+                radioButton3.Checked = false;
+                radioButton4.Checked = false;
             }
             else
             {
-                MessageBox.Show("Quiz completed! Your score: " + score);
+                ShowScoreForm();
             }
-        }
-
-        // Asynchronous function to check the selected answer
-        private async void btnNext_ClickAsync(object sender, EventArgs e)
-        {
-            await CheckAnswerAsync();  // Call the async method to check the answer
         }
 
         // Asynchronous method to check if the answer is correct
@@ -99,7 +103,7 @@ namespace Quiz_personal
             }
             else
             {
-                MessageBox.Show("Quiz completed! Your score: " + score);
+                ShowScoreForm();
             }
         }
 
@@ -112,5 +116,26 @@ namespace Quiz_personal
         {
             await LoadQuizDataAsync();
         }
+
+        private void ShowScoreForm()
+        {
+            // Abre o ScoreForm para exibir o score final
+            ScoreForm scoreForm = new ScoreForm(score, totalQuestions);
+
+            // Verifica se o usuário escolheu "Restart"
+            if (scoreForm.ShowDialog() == DialogResult.Retry)
+            {
+                // Reinicia o jogo voltando para o StartForm
+                this.Close();
+                StartForm startForm = new StartForm();
+                startForm.Show();
+            }
+            else
+            {
+                // Fecha o quiz quando o ScoreForm é fechado
+                this.Close();
+            }
+        }
     }
 }
+
